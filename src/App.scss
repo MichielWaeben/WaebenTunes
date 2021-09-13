@@ -1,0 +1,379 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body > #root > div {
+  height: 100vh;
+}
+
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: linear-gradient(331deg, #000000 0%, #2f2f2f);
+}
+
+.content-body {
+  width: 100%;
+  height: calc(100% - 140px);
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-float infinite 3s ease-in-out;
+  }
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.App-link {
+  color: rgb(112, 76, 182);
+}
+
+@keyframes App-logo-float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+//COMPONENTS
+
+//Header
+
+.Header {
+  width: 100%;
+  height: 60px;
+  background-color: #282828;
+  display: flex;
+  box-shadow: 0 3px 10px #00000057;
+  flex-direction: row;
+  padding: 0 15px 0 15px;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    color: rgb(228, 175, 0);
+    cursor: pointer;
+    height: fit-content;
+    position: absolute;
+    left: 15px;
+  }
+
+  h2 {
+    color: white;
+  }
+}
+
+//SmallPLayer
+
+.SmallPlayer {
+  width: 100%;
+  background-color: #282828;
+  height: 80px;
+  display: flex;
+  box-shadow: 0 -3px 10px #00000057;
+
+  .time-control {
+    width: 50%;
+    display: flex;
+    align-items: center;
+
+    input {
+      width: 100%;
+      -webkit-appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    p {
+      padding: 1rem;
+      color: rgb(228, 175, 0);
+    }
+  }
+
+  .play-control {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    svg {
+      color: rgb(228, 175, 0);
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+      font-size: 25px;
+
+      &:hover {
+        transform: scale(1.05);
+        color: rgb(185, 142, 0);
+      }
+      &:active {
+        transition: all 0.1s ease-in-out !important;
+        transform: scale(0.8);
+      }
+    }
+  }
+
+  input[type="range"]:focus {
+    outline: none;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+  }
+
+  .track {
+    width: 100%;
+    height: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    background: rgb(228, 175, 0);
+  }
+
+  .animate-track {
+    background: rgb(56, 56, 56);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(20%);
+    padding: 1rem;
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    .time-control {
+      width: 90%;
+    }
+    .play-control {
+      width: 70%;
+    }
+  }
+}
+
+.MusicCollections {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+
+  ul {
+    margin: 0 auto;
+    width: 80%;
+    font-size: 0; /* remove inline-block extra space */
+    padding-left: 0; /* remove list padding */
+  }
+
+  li {
+    display: inline-block;
+    font-size: 18px; /* restore font size removed in container */
+    list-style-type: none;
+    line-height: 50px;
+    margin: 15px 25px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 430px) {
+    ul {
+      width: 200px;
+    }
+  }
+  @media screen and (min-width: 431px) and (max-width: 630px) {
+    ul {
+      width: 400px;
+    }
+  }
+  @media screen and (min-width: 631px) and (max-width: 830px) {
+    ul {
+      width: 600px;
+    }
+  }
+  @media screen and (min-width: 831px) and (max-width: 1030px) {
+    ul {
+      width: 800px;
+    }
+  }
+  @media screen and (min-width: 1031px) and (max-width: 1230px) {
+    ul {
+      width: 1000px;
+    }
+  }
+}
+
+.CollectionCard {
+  width: 150px;
+  height: 150px;
+  background-color: rgb(228, 175, 0);
+  color: black;
+  border-radius: 10px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: 600;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.603);
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 0 20px rgb(0, 0, 0);
+    transform: scale(1.05);
+  }
+  &:active {
+    transition: all 0.1s ease !important;
+    box-shadow: none;
+    transform: scale(0.95);
+  }
+}
+
+.MusicTable {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+}
+
+.CollectionInfo {
+  height: 30%;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+height: 100%;
+  border-collapse:collapse;
+}
+
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;/* even columns width , fix width of table too*/
+}
+
+th {
+  background-color: #181818;
+  color: #6A6A6A;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+tr {
+  width: 100%;
+  background-color: transparent;
+  height: 60px;
+  color: rgb(182, 182, 182);
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: 200;
+  border-bottom: 1px solid #6A6A6A;
+}
+
+tbody {
+  display: block;
+  height: calc(100% - 60px);
+  overflow-y: scroll;
+}
+
+thead tr th {
+  position: sticky;
+  top: 0;
+}
+th {
+  color: #6A6A6A;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+table {
+  width: 100%;
+  font-family: sans-serif;
+}
+table td {
+  padding: 16px;
+}
+tbody tr {
+  display: table;
+  width: 100%;
+  height: 60px;
+  color: rgb(182, 182, 182);
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: 200;
+  border-bottom: 1px solid #6A6A6A;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  &:hover {
+    color: rgb(228, 175, 0);
+    background-color: rgba(0, 0, 0, 0.514);
+  }
+}
+thead {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.table-container {
+  height: 70%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #131313;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #6A6A6A;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
