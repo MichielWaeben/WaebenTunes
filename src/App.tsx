@@ -15,19 +15,20 @@ function App() {
     <div className={`App ${libraryStatus ? "library-active" : ""}`}>
       <BrowserRouter>
       <Header></Header>
-      </BrowserRouter>
+
       <div className="content-body">
-      <BrowserRouter>
+
         <Switch>
           <Route path="/library" exact>
             <MusicCollections></MusicCollections>
           </Route>
-          <Route path="/library/:collection" exact>
+          <Route path="/library/:collectionId" exact>
             <MusicTable></MusicTable>
           </Route>
         </Switch>
-      </BrowserRouter>
+
       </div>
+      </BrowserRouter>
       <SmallPlayer></SmallPlayer>
       {/*       <button onClick={() => dispatch({ type: "TOGGLE_LIBRARY_STATUS" })}>
         TEST

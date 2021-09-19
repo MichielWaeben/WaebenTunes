@@ -9,6 +9,5 @@ export const loadCollections = () => async (dispatch: any) =>
             type: "FETCH_COLLECTIONS",
             payload: allCollections,
           });
-          console.log(allCollections);
     });
 }

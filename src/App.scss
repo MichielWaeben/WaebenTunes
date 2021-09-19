@@ -86,6 +86,7 @@ body > #root > div {
     height: fit-content;
     position: absolute;
     left: 15px;
+    top: 8px;
   }
 
   h2 {
@@ -196,60 +197,44 @@ body > #root > div {
   box-sizing: border-box;
 
   ul {
-    margin: 0 auto;
-    width: 80%;
-    font-size: 0; /* remove inline-block extra space */
-    padding-left: 0; /* remove list padding */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, max-content));
+    grid-gap: 30px;
+    padding: initial;
+    justify-content: left;
   }
 
   li {
-    display: inline-block;
-    font-size: 18px; /* restore font size removed in container */
     list-style-type: none;
-    line-height: 50px;
-    margin: 15px 25px;
-    box-sizing: border-box;
-    text-align: center;
+    padding: 5px;
+    width: 150px;
+    height: 150px
   }
 
-  @media screen and (max-width: 430px) {
-    ul {
-      width: 200px;
-    }
-  }
-  @media screen and (min-width: 431px) and (max-width: 630px) {
-    ul {
-      width: 400px;
-    }
-  }
-  @media screen and (min-width: 631px) and (max-width: 830px) {
-    ul {
-      width: 600px;
-    }
-  }
-  @media screen and (min-width: 831px) and (max-width: 1030px) {
-    ul {
-      width: 800px;
-    }
-  }
-  @media screen and (min-width: 1031px) and (max-width: 1230px) {
-    ul {
-      width: 1000px;
-    }
+  a {
+    text-decoration: none;
   }
 }
 
-.CollectionCard {
-  width: 150px;
-  height: 150px;
+.collection-list {
+  width: 100%;
+  height: 100%;
+}
+  
+.card-body {
+  width: 100%;
+  height: 100%;
   background-color: rgb(228, 175, 0);
-  color: black;
-  border-radius: 10px;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  font-weight: 600;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.603);
+  border-radius: 10px;
   transition: all 0.2s ease;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: black;
+  font-weight: 600;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 
   &:hover {
     box-shadow: 0 0 20px rgb(0, 0, 0);
@@ -260,6 +245,45 @@ body > #root > div {
     box-shadow: none;
     transform: scale(0.95);
   }
+}
+
+.collection-card-container {
+  cursor: pointer;
+  animation: 2s pop-up ease forwards;
+}
+
+@keyframes pop-up {
+  0% { -webkit-transform: matrix3d(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+  2.15% { -webkit-transform: matrix3d(0.757, 0, 0, 0, 0, 0.757, 0, 0, 0, 0, 1, 0, 0, 4.628, 0, 1); transform: matrix3d(0.757, 0, 0, 0, 0, 0.757, 0, 0, 0, 0, 1, 0, 0, 4.628, 0, 1); }
+  2.2% { -webkit-transform: matrix3d(0.762, 0, 0, 0, 0, 0.762, 0, 0, 0, 0, 1, 0, 0, 4.78, 0, 1); transform: matrix3d(0.762, 0, 0, 0, 0, 0.762, 0, 0, 0, 0, 1, 0, 0, 4.78, 0, 1); }
+  4.3% { -webkit-transform: matrix3d(0.939, 0, 0, 0, 0, 0.939, 0, 0, 0, 0, 1, 0, 0, 11.591, 0, 1); transform: matrix3d(0.939, 0, 0, 0, 0, 0.939, 0, 0, 0, 0, 1, 0, 0, 11.591, 0, 1); }
+  4.4% { -webkit-transform: matrix3d(0.945, 0, 0, 0, 0, 0.945, 0, 0, 0, 0, 1, 0, 0, 11.906, 0, 1); transform: matrix3d(0.945, 0, 0, 0, 0, 0.945, 0, 0, 0, 0, 1, 0, 0, 11.906, 0, 1); }
+  6.46% { -webkit-transform: matrix3d(1.026, 0, 0, 0, 0, 1.026, 0, 0, 0, 0, 1, 0, 0, 17.221, 0, 1); transform: matrix3d(1.026, 0, 0, 0, 0, 1.026, 0, 0, 0, 0, 1, 0, 0, 17.221, 0, 1); }
+  6.61% { -webkit-transform: matrix3d(1.029, 0, 0, 0, 0, 1.029, 0, 0, 0, 0, 1, 0, 0, 17.498, 0, 1); transform: matrix3d(1.029, 0, 0, 0, 0, 1.029, 0, 0, 0, 0, 1, 0, 0, 17.498, 0, 1); }
+  8.61% { -webkit-transform: matrix3d(1.047, 0, 0, 0, 0, 1.047, 0, 0, 0, 0, 1, 0, 0, 19.452, 0, 1); transform: matrix3d(1.047, 0, 0, 0, 0, 1.047, 0, 0, 0, 0, 1, 0, 0, 19.452, 0, 1); }
+  8.81% { -webkit-transform: matrix3d(1.047, 0, 0, 0, 0, 1.047, 0, 0, 0, 0, 1, 0, 0, 19.471, 0, 1); transform: matrix3d(1.047, 0, 0, 0, 0, 1.047, 0, 0, 0, 0, 1, 0, 0, 19.471, 0, 1); }
+  11.21% { -webkit-transform: matrix3d(1.033, 0, 0, 0, 0, 1.033, 0, 0, 0, 0, 1, 0, 0, 17.708, 0, 1); transform: matrix3d(1.033, 0, 0, 0, 0, 1.033, 0, 0, 0, 0, 1, 0, 0, 17.708, 0, 1); }
+  13.61% { -webkit-transform: matrix3d(1.014, 0, 0, 0, 0, 1.014, 0, 0, 0, 0, 1, 0, 0, 14.016, 0, 1); transform: matrix3d(1.014, 0, 0, 0, 0, 1.014, 0, 0, 0, 0, 1, 0, 0, 14.016, 0, 1); }
+  14.16% { -webkit-transform: matrix3d(1.01, 0, 0, 0, 0, 1.01, 0, 0, 0, 0, 1, 0, 0, 13.178, 0, 1); transform: matrix3d(1.01, 0, 0, 0, 0, 1.01, 0, 0, 0, 0, 1, 0, 0, 13.178, 0, 1); }
+  16.02% { -webkit-transform: matrix3d(1.002, 0, 0, 0, 0, 1.002, 0, 0, 0, 0, 1, 0, 0, 10.921, 0, 1); transform: matrix3d(1.002, 0, 0, 0, 0, 1.002, 0, 0, 0, 0, 1, 0, 0, 10.921, 0, 1); }
+  18.42% { -webkit-transform: matrix3d(0.997, 0, 0, 0, 0, 0.997, 0, 0, 0, 0, 1, 0, 0, 9.862, 0, 1); transform: matrix3d(0.997, 0, 0, 0, 0, 0.997, 0, 0, 0, 0, 1, 0, 0, 9.862, 0, 1); }
+  19.72% { -webkit-transform: matrix3d(0.997, 0, 0, 0, 0, 0.997, 0, 0, 0, 0, 1, 0, 0, 10.167, 0, 1); transform: matrix3d(0.997, 0, 0, 0, 0, 0.997, 0, 0, 0, 0, 1, 0, 0, 10.167, 0, 1); }
+  20.82% { -webkit-transform: matrix3d(0.997, 0, 0, 0, 0, 0.997, 0, 0, 0, 0, 1, 0, 0, 10.773, 0, 1); transform: matrix3d(0.997, 0, 0, 0, 0, 0.997, 0, 0, 0, 0, 1, 0, 0, 10.773, 0, 1); }
+  23.22% { -webkit-transform: matrix3d(0.998, 0, 0, 0, 0, 0.998, 0, 0, 0, 0, 1, 0, 0, 12.572, 0, 1); transform: matrix3d(0.998, 0, 0, 0, 0, 0.998, 0, 0, 0, 0, 1, 0, 0, 12.572, 0, 1); }
+  25.63% { -webkit-transform: matrix3d(0.999, 0, 0, 0, 0, 0.999, 0, 0, 0, 0, 1, 0, 0, 14.045, 0, 1); transform: matrix3d(0.999, 0, 0, 0, 0, 0.999, 0, 0, 0, 0, 1, 0, 0, 14.045, 0, 1); }
+  27.93% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 14.522, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 14.522, 0, 1); }
+  30.83% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13.917, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13.917, 0, 1); }
+  32.73% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13.213, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13.213, 0, 1); }
+  37.44% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 12.262, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 12.262, 0, 1); }
+  41.99% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 12.85, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 12.85, 0, 1); }
+  46.95% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13.358, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13.358, 0, 1); }
+  50% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13.206, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13.206, 0, 1); }
+  56.56% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 12.827, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 12.827, 0, 1); }
+  66.07% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13.084, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13.084, 0, 1); }
+  75.58% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 12.959, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 12.959, 0, 1); }
+  85.09% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13.02, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13.02, 0, 1); }
+  94.69% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 12.99, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 12.99, 0, 1); }
+  100% { -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13, 0, 1); transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 13, 0, 1); } 
 }
 
 .MusicTable {

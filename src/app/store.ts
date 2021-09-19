@@ -3,9 +3,8 @@ import { applyMiddleware, compose, createStore } from "redux";
 import thunk from 'redux-thunk';
 import rootReducers from "../reducers" 
 
-const composeEnchancer = compose;
-
-export const store = createStore(rootReducers, composeEnchancer(applyMiddleware(thunk)));
+const composeEnhancers: any = (window as any)['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose;
+export const store = createStore(rootReducers, composeEnhancers(applyMiddleware(thunk)));
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

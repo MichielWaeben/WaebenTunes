@@ -9,7 +9,7 @@ const currentSongReducer = (state = currentSong, action: any) => {
     case "SET_CURRENT_SONG":
       return {
         ...state,
-        searched: action.payload.searched,
+        currentSong: action.payload,
       };
     default: {
       return state;

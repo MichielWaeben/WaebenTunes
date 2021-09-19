@@ -1,70 +1,56 @@
-import React from "react";
+import { collection } from "@firebase/firestore/dist/lite";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Column, useTable } from "react-table";
+import { Song } from "../models/song";
+import { getAllSongs, getAllSongsFromCollection } from "../services/database.service";
 import { Table } from "./Table";
 
-type Data = {
-  id: string;
-  date: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  view: React.ReactNode;
-};
-
-const createArr = (n: number): Data[] => {
-  const data: Data[] = [];
-  for (let i = 0; i < n; i += 1) {
-    data.push({
-      id: `ID-${Math.random().toFixed(4)}`,
-      date: new Date().toDateString(),
-      firstName: `Rick #${i}`,
-      lastName: `Sanchez #${i}`,
-      email: `morty_${i}@rick.space`,
-      view: <button>View</button>,
-    });
-  }
-  return data;
-};
-
 const MusicTable = () => {
-  const data = React.useMemo<Data[]>(() => createArr(10), []);
-  const columns = React.useMemo<Column<Data>[]>(
+  const { collectionId } = useParams<{ collectionId: string }>();
+
+  const [allSongs, setAllSongs] = useState([] as Song[]);
+
+    useEffect(() => {
+      getAllSongsFromCollection(collectionId).then(songs => {
+
+        setAllSongs(songs);
+      })
+    }, [])
+
+    const data = React.useMemo<Song[]>(() => allSongs, [allSongs]);
+
+
+
+  const columns = React.useMemo<Column<Song>[]>(
     () => [
       {
-        Header: "ID",
-        accessor: "id",
+        Header: "Name",
+        accessor: "name",
       },
       {
-        Header: "Date Requested",
-        accessor: "date",
+        Header: "Artist",
+        accessor: "artist",
       },
       {
-        Header: "First Name",
-        accessor: "firstName",
-      },
-      {
-        Header: "Last Name",
-        accessor: "lastName",
-      },
-      {
-        Header: "Email",
-        accessor: "email",
-      },
-      {
-        accessor: "view",
-      },
+        Header: "Collection",
+        accessor: (originalRow) => {
+          return originalRow.collection.name
+      }
+    }
     ],
     []
   );
-
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<Data>({ columns, data });
+    useTable<Song>({ columns, data });
 
+    
   return (
     <div className="MusicTable">
       <div className="CollectionInfo"></div>
       <div className="table-container">
-                <Table<Data>
+                <Table<Song>
         getTableProps={getTableProps}
         getTableBodyProps={getTableBodyProps}
         headerGroups={headerGroups}

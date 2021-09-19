@@ -1,25 +1,39 @@
 
-import { collection, getDocs } from 'firebase/firestore/lite';
+import { collection, getDocs, query, where } from 'firebase/firestore/lite';
 import firestore from '../firebase';
 import { Collection } from "../models/collection";
 import { Song } from "../models/song";
+import firebase from '@firebase/app';
+import '@firebase/firestore';
 
 let musicDb = collection(firestore, "songs");
 let collectionDb = collection(firestore, "collections");
 
-const getAllSongs = async () => {
+export const getAllSongs = async () => {
     let musicSnapshot = await getDocs(musicDb);
     return musicSnapshot.docs.map(doc => doc.data() as Song);
 }
 
-const getAllCollections = async () => {
+export const getAllCollections = async () => {
     let collectionSnapshot = await getDocs(collectionDb);
     return collectionSnapshot.docs.map(doc => doc.data() as Collection);
 }
 
+export const getAllSongsFromCollection = async (collectionId: string) => {
+    const songQuery = query(musicDb, where("collection.id", "==", collectionId));
+    const querySnapshot = await getDocs(songQuery);
+    let songList: Song[] = [];
+    querySnapshot.forEach((doc) => {
+        songList.push(doc.data() as Song);
+      });
+    
+    return songList;
+  };
+
 const DatabaseService = {
     getAllSongs,
-    getAllCollections
+    getAllCollections,
+    getAllSongsFromCollection
 
     /*getChildWithId(id: string) {
         return this.db.collection("Children").doc(id).get();
