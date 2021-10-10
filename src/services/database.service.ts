@@ -19,6 +19,12 @@ export const getAllCollections = async () => {
     return collectionSnapshot.docs.map(doc => doc.data() as Collection);
 }
 
+export const getCollectionById = async (collectionId: string) => {
+    const collectionQuery = query(collectionDb, where("id", "==", collectionId));
+    const querySnapshot = await getDocs(collectionQuery);
+    return querySnapshot.docs[0].data() as Collection;
+}
+
 export const getAllSongsFromCollection = async (collectionId: string) => {
     const songQuery = query(musicDb, where("collection.id", "==", collectionId));
     const querySnapshot = await getDocs(songQuery);
