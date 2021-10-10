@@ -1,17 +1,30 @@
 
-import { collection, getDocs, query, where } from 'firebase/firestore/lite';
+import { collection, getDocs, query, where, doc, setDoc } from 'firebase/firestore/lite';
 import firestore from '../firebase';
 import { Collection } from "../models/collection";
 import { Song } from "../models/song";
-import firebase from '@firebase/app';
 import '@firebase/firestore';
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
-let musicDb = collection(firestore, "songs");
-let collectionDb = collection(firestore, "collections");
+const musicDb = collection(firestore, "songs");
+const collectionDb = collection(firestore, "collections");
+const storage = getStorage();
 
 export const getAllSongs = async () => {
     let musicSnapshot = await getDocs(musicDb);
     return musicSnapshot.docs.map(doc => doc.data() as Song);
+}
+
+export const addSong = async (song: Song, file: any) => {
+const storageRef = ref(storage, `Music/${file.name}`);
+    return uploadBytes(storageRef, file).then(async (snapshot) => {
+        getDownloadURL(storageRef).then(async (url) => {
+        song.audio = url;
+        const songRef = doc(musicDb);
+        song.id = songRef.id;
+        await setDoc(songRef, song);
+      });
+})
 }
 
 export const getAllCollections = async () => {

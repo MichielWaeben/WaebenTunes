@@ -418,6 +418,7 @@ th {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-weight: 400;
   font-size: 20px;
+  text-align: left;
 }
 
 tr {
@@ -428,6 +429,7 @@ tr {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-weight: 200;
   border-bottom: 1px solid #6A6A6A;
+  text-align: left;
 }
 
 tbody {
@@ -515,7 +517,7 @@ thead {
 
 //Spectogram
 .playing-t {
-  width: 150px;
+  width: 100px;
   text-align: center;
 }
 .icon {
@@ -657,6 +659,7 @@ thead {
   position: fixed;
   bottom: 0;
   left: 0;
+  z-index: 19;
   width: 15rem;
   height: calc(100% - 55px);
   background: linear-gradient(331deg, #000000 0%, #2f2f2f);
@@ -729,10 +732,11 @@ thead {
   position: relative !important;
 }
 .add-song-modal {
-  width: 70%;
+  width: 400px;
   height: 500px;
   border-radius: 10px;
-  background: linear-gradient(331deg, #000000 0%, #2f2f2f);
+  background: linear-gradient(
+    331deg, #1b1b1b 0%, #323232);
   animation: 2s pop-up ease forwards;
 }
 .modal-close-button {
@@ -755,7 +759,7 @@ thead {
   box-sizing: border-box;
   border-bottom: 1px solid rgb(228, 175, 0);
   h1 {
-    color: white;
+    color: rgb(228, 175, 0);
   }
 }
 
@@ -764,6 +768,39 @@ thead {
   box-sizing: border-box;
   width: 100%;
   height: calc(100% - 120px);
+
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  button {
+    outline: none;
+    border: none;
+    background: rgb(228, 175, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 3px;
+    padding: 10px 20px 10px 20px;
+    margin: 20px;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+    &:hover {
+      transform: scale(1.05);
+    }
+    &:active {
+      transition: all 0.05s ease !important;
+      transform: scale(0.98);
+    }
+  }
 }
 
 .song-info-input {
@@ -771,11 +808,79 @@ thead {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  width: 90%;
+  text-align: left;
+
+  input {
+    width: 100%;
+    height: 40px;
+    color: white;
+    background: #3b3b3b;
+    display: flex;
+    padding-left: 10px;
+    font-size: 20px;
+    border-radius: 6px;
+    outline: none !important;
+    border: none !important;
+    justify-content: center;
+    align-items: center;
+    &:focus {
+      outline: none !important;
+      border: none !important;
+    }
+    &:active {
+      outline: none;
+      border: none;
+    }
+  }
 
   label {
     font-size: 25px;
     color: #A2A2A2;
   }
+
+  .file-upload {
+    margin-top: 5px;
+    width: 100%;
+    max-height: 40px;
+  }
+
+  .file-upload .file-upload-select {
+    color: #dbdbdb;
+    cursor: pointer;
+    text-align: left;
+    background: #3b3b3b;
+    overflow: hidden;
+    position: relative;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: row;
+  }
+  .file-upload .file-upload-select .file-select-button {
+    background: #1f1f1f;
+    color: white;
+    padding: 10px;
+    display: inline-block;
+    min-width: 114px;
+  }
+  .file-upload .file-upload-select .file-select-name {
+    display: inline-block;
+    display: flex;
+    padding-left: 5px;
+    align-items: center;
+    width: calc(100% - 102px);
+  }
+  .file-upload .file-upload-select:hover .file-select-button {
+    background: #2e2e2e;
+    color: #ffffff;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+  }
+  .file-upload .file-upload-select input[type="file"] {
+    display: none;
+  }  
 }
 
 .modal-footer {

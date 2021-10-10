@@ -7,7 +7,6 @@ import { RootState, store } from '../app/store';
 const Header = () => {
     const navStatus = useSelector((state: RootState) => state.navStatus);
     const logoClickHandler = () => {
-        console.log(navStatus)
         if (navStatus) {
             store.dispatch(setNavStatus(false));
         } else {

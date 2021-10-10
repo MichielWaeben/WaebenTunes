@@ -1,27 +1,59 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  HTMLInputTypeAttribute,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useParams } from "react-router-dom";
 import { Column, useTable } from "react-table";
 import { Collection } from "../models/collection";
 import { Song } from "../models/song";
-import { getAllSongsFromCollection, getCollectionById } from "../services/database.service";
+import {
+  addSong,
+  getAllSongsFromCollection,
+  getCollectionById,
+} from "../services/database.service";
 import { Table } from "./Table";
-import Modal from 'react-modal';
-import { getStorage, ref } from "firebase/storage";
+import Modal from "react-modal";
 
 const MusicTable = () => {
   const { collectionId } = useParams<{ collectionId: string }>();
-
+  let fileInputRef = useRef<HTMLInputTypeAttribute>(null) as any;
   const [allSongs, setAllSongs] = useState([] as Song[]);
   const [collection, setCollection] = useState({} as Collection);
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  const storage = getStorage();
-  const [image , setImage] = useState('');
-const upload = ()=>{
-  if(image == null)
-    return;
-  storage.ref(`/images/${image.name}`).put(image)
-  .on("state_changed" , alert("success") , alert);
-}
+  let newSongName = "";
+  let newSongArtist = "";
+  let newSongFile: any;
+
+  const fileChangeHandler = (event: any) => {
+    newSongFile = event.target.files[0];
+    let selectName = document.getElementsByClassName("file-select-name")[0];
+    selectName.innerHTML = newSongFile.name;
+  };
+
+  const onNameChange = (e: any) => {
+    newSongName = e.target.value;
+  };
+  const onArtistChange = (e: any) => {
+    newSongArtist = e.target.value;
+  };
+
+  const fileUploadClick = () => {
+    let fileInput = document.getElementById("file-upload-input");
+    fileInput!.click();
+  }
+
+  const uploadSong = async (e: any) => {
+    e.preventDefault();
+    let newSong: Song = {} as Song;
+    newSong.name = newSongName;
+    newSong.artist = newSongArtist;
+    newSong.cover = "";
+    newSong.collection = collection;
+    await addSong(newSong, newSongFile);
+    closeModal();
+  };
 
   function openModal() {
     setIsOpen(true);
@@ -30,22 +62,19 @@ const upload = ()=>{
   function closeModal() {
     setIsOpen(false);
   }
-    useEffect(() => {
-      getAllSongsFromCollection(collectionId).then(songs => {
+  useEffect(() => {
+    getAllSongsFromCollection(collectionId).then((songs) => {
+      setAllSongs(songs);
+    });
+  }, []);
 
-        setAllSongs(songs);
-      })
-    }, [])
+  useEffect(() => {
+    getCollectionById(collectionId).then((collection) => {
+      setCollection(collection);
+    });
+  }, []);
 
-    useEffect(() => {
-      getCollectionById(collectionId).then(collection => {
-        setCollection(collection);
-      })
-    }, [])
-
-    const data = React.useMemo<Song[]>(() => allSongs, [allSongs]);
-
-
+  const data = React.useMemo<Song[]>(() => allSongs, [allSongs]);
 
   const columns = React.useMemo<Column<Song>[]>(
     () => [
@@ -60,15 +89,15 @@ const upload = ()=>{
       {
         Header: "Collection",
         accessor: (originalRow) => {
-          return originalRow.collection.name
-      }
-    }
+          return originalRow.collection.name;
+        },
+      },
     ],
     []
   );
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable<Song>({ columns, data });
-    
+
   return (
     <div className="MusicTable">
       <div className="CollectionInfo">
@@ -82,38 +111,65 @@ const upload = ()=>{
             <h1>{collection.name}</h1>
           </div>
         </div>
-        <div className="background" style={{backgroundImage: `url(${collection.cover})`}}></div>
+        <div
+          className="background"
+          style={{ backgroundImage: `url(${collection.cover})` }}
+        ></div>
       </div>
       <div className="table-container">
-                <Table<Song>
-        getTableProps={getTableProps}
-        getTableBodyProps={getTableBodyProps}
-        headerGroups={headerGroups}
-        rows={rows}
-        prepareRow={prepareRow}
-      />
+        <Table<Song>
+          getTableProps={getTableProps}
+          getTableBodyProps={getTableBodyProps}
+          headerGroups={headerGroups}
+          rows={rows}
+          prepareRow={prepareRow}
+        />
       </div>
 
-      <Modal className="add-song-modal"
-           isOpen={modalIsOpen}
-           contentLabel="Minimal Modal Example"
-        >
-          <div className="modal-header">
-            <h1>Add Song</h1>
-            <button className="modal-close-button" onClick={closeModal}>X</button>
-          </div>
-          <div className="modal-body">
+      <Modal
+        className="add-song-modal"
+        isOpen={modalIsOpen}
+        ariaHideApp={false}
+        contentLabel="Minimal Modal Example"
+      >
+        <div className="modal-header">
+          <h1>Add Song</h1>
+          <button className="modal-close-button" onClick={closeModal}>
+            X
+          </button>
+        </div>
+        <div className="modal-body">
+          <form onSubmit={uploadSong}>
             <div className="song-info-input">
-            <label>Name</label>
-            <input type="text" />
+              <label>Name</label>
+              <input required onChange={onNameChange} type="text" />
             </div>
             <div className="song-info-input">
-            <label>Artist</label>
-            <input type="text" />
+              <label>Artist</label>
+              <input required onChange={onArtistChange} type="text" />
             </div>
-          </div>
-          <div className="modal-footer"></div>
-        </Modal>
+            <div className="song-info-input">
+              <label>Song</label>
+              <div className="file-upload">
+                <div onClick={fileUploadClick} className="file-upload-select">
+                  <div className="file-select-button">Choose Song</div>
+                  <div className="file-select-name">No file chosen...</div>
+                  <input
+                    required
+                    accept=".mp3,audio/*"
+                    type="file"
+                    onChange={fileChangeHandler}
+                    name="file-upload-input"
+                    id="file-upload-input"
+                  ></input>
+                </div>
+              </div>
+            </div>
+            <button type="submit">Save</button>
+          </form>
+        </div>
+        <div className="modal-footer"></div>
+      </Modal>
     </div>
   );
 };
